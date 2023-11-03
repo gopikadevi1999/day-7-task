@@ -1,14 +1,15 @@
 // Question 1
 
 var request = new XMLHttpRequest();
-request.open("GET","https://restcountries.com/v3.1/all",true)
+request.open("GET", "https://restcountries.com/v3.1/all", true);
 request.send();
-request.onload = function(){
-    var data = request.response;
-    var result = JSON.parse(data)
-    var res = result.filter((country)=>country.region === "Asia")
-    var final = res.filter((ele)=>console.log(ele.name.common))
-}
+request.onload = function () {
+  var data = request.response;
+  var result = JSON.parse(data);
+  var countriesInAsia = result.filter((country) => country.region === "Asia");
+  console.log(countriesInAsia);
+};
+
 
 //Question 2
 
@@ -17,9 +18,9 @@ request.open("GET","https://restcountries.com/v3.1/all",true)
 request.send();
 request.onload = function(){
     var data = request.response;
-    var result1 = JSON.parse(data)
-    var res1 = result1.filter((x)=>x.population<200000)
-    var final1 = res1.map((ele)=>console.log(ele.population))
+    var result = JSON.parse(data)
+    var res1 = result.filter((x)=>x.population<200000)
+    res1.map((ele)=>console.log(ele.population))
 }
 
 //Question 3
@@ -29,8 +30,8 @@ request.open("GET","https://restcountries.com/v3.1/all",true)
 request.send();
 request.onload = function(){
     var data = request.response;
-    var result2 = JSON.parse(data)
-    var res2 = result2.forEach((country)=>console.log(`${country.name.common} ${country.capital} ${country.flag}`))
+    var result = JSON.parse(data)
+    result.forEach((country)=>console.log(`${country.name.common} ${country.capital} ${country.flag}`))
 }
 
 //Question 4
@@ -38,10 +39,10 @@ request.onload = function(){
 var request = new XMLHttpRequest();
 request.open("GET","https://restcountries.com/v3.1/all",true)
 request.send();
-request.onload = function(){
+request.onload = function() {
     var data = request.response;
-    var result3 = JSON.parse(data)
-    var res3 = result3.reduce((acc,country)=>acc+country.population,0)
+    var result = JSON.parse(data)
+    var res3 = result.reduce((acc,country)=>acc+country.population,0)
     console.log(res3)
 }
 
@@ -52,6 +53,13 @@ request.open("GET", "https://restcountries.com/v3.1/all", true);
 request.send();
 request.onload = function () {
   var data = request.response;
-  var result4 = JSON.parse(data)
-  var res4 = result4.filter((country)=>console.log(country.currencies))
-}
+  var result = JSON.parse(data);
+
+  var countriesUsingUSD = result.filter((country) => {
+    return country.currencies && country.currencies.USD;
+  });
+
+  countriesUsingUSD.forEach((country) => {
+    console.log("Country using US Dollars: " + country.name.common);
+  });
+};
